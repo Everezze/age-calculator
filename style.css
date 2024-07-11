@@ -18,6 +18,10 @@ body{
 	background: var(--off-white);
 	margin: 0;
 	padding: 5rem 1rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
 }
 
 main{
@@ -62,6 +66,10 @@ input{
 	font-family: "Poppins",sans-serif;
 }
 
+.inputs-container.active input.active{
+	outline: 1px solid var(--light-red);
+}
+
 .separator{
 	border-top: 1px solid var(--light-grey);
 	position: relative;
@@ -86,6 +94,10 @@ input{
 	vertical-align: middle;
 }
 
+.result.active{
+	display: flex;
+}
+
 .result span{
 	/*border-top: 15px solid var(--purple);*/
 	width: calc( var(--font-size) / 2) ;
@@ -93,6 +105,20 @@ input{
 	height: 15px;
 	background: var(--purple);
 	transform: skew(-10deg);
+	color: var(--purple);
+	font-weight: bolder;
+}
+
+.result span.active{
+	height:initial;
+	width: initial;
+	background: initial;
+	transform: skew(0deg);
+	margin-right: .5rem;
+}
+
+.result span.deactivate{
+	display: none;
 }
 
 .flex{
@@ -103,6 +129,17 @@ input{
 	gap: min(5vw,2rem);
 }
 
+.error{
+	display: none;
+	color: var(--light-red);
+	font-size: .8rem;
+	font-style: italic;
+}
+
+.inputs-container.active .error.active{
+	display: initial;
+}
+
 .inputs-container span{
 	color: var(--smokey-grey);
 	font-size: .8rem;
@@ -110,6 +147,10 @@ input{
 	font-weight: bold;
 	margin-bottom: .5rem;
 	display: inline-block;
+}
+
+.inputs-container.active span.active{
+	color: var(--light-red);
 }
 
 .inputs-container>div{
