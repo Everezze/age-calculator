@@ -3,17 +3,16 @@ const generator = document.querySelector(".generator");
 const inputsContainer = document.querySelector(".inputs-container");
 const results = document.querySelectorAll(".result");
 const currentDate = new Date();
-let dateFilled = 0;
+let dateFilled = [false,false,false];
 //let errorMessage = "";
 //let firstTry=false;
 
 function isValid(event){
 	const input = event.currentTarget
 	const inputValue = input.value;
-	let correctInput = false;
 	let errorMessage = "This field is required";
+	let correctInput = false;
 	if(inputValue==""){
-		dateFilled -=1;
 		return [correctInput,errorMessage];
 	}
 
@@ -23,13 +22,12 @@ function isValid(event){
 		//}
 		//input.value = input.value.padStart(2,"0");
 		if(inputValue >= 1 && inputValue <= 31){
+			dateFilled[0] = true;
 			correctInput = true;
-			dateFilled +=1;
 		}
 		else{
-			correctInput = false;
 			errorMessage = "Must be a valid day";
-			dateFilled -=1;
+			dateFilled[0] = false;
 		}
 	}
 	else if(input.classList.contains("month")){
@@ -38,13 +36,12 @@ function isValid(event){
 		//}
 		//input.value = input.value.padStart(2,"0");
 		if(inputValue >= 1 && inputValue <= 12){
+			dateFilled[1] = true;
 			correctInput = true;
-			dateFilled +=1;
 		}
 		else{
-			correctInput = false;
 			errorMessage = "Must be a valid month";
-			dateFilled -=1;
+			dateFilled[1] = false;
 		}
 	}
 	else if(input.classList.contains("year")){
@@ -53,13 +50,12 @@ function isValid(event){
 		//}
 		//input.value = input.value.padStart(4,"0");
 		if(inputValue <= currentDate.getFullYear()){
+			dateFilled[2] = true;
 			correctInput = true;
-			dateFilled +=1;
 		}
 		else{
-			correctInput = false;
 			errorMessage = "Must be in the past";
-			dateFilled -=1;
+			dateFilled[2] = false;
 		}
 	}
 
@@ -108,7 +104,7 @@ generator.addEventListener("click",function(){
 		inputsContainer.classList.add("active");
 	}
 
-	if(inputs.every(element => !element.classList.contains("active"))){
+	if(dateFilled.every(el => el)){
 		if(chosenDate.getDate() != inputs[0].value){
 			//console.log("entered nan or input diff condition");
 			let containersInput = document.querySelectorAll(".inputs-container > div");
@@ -128,6 +124,18 @@ generator.addEventListener("click",function(){
 			});
 		}
 		else{
+			if(inputs[0].classList.contains("active")){
+				let containersInput = document.querySelectorAll(".inputs-container > div");
+				containersInput.forEach(function(element){
+					console.log("current element", element);
+					let title = element.querySelector("span");
+					let input = element.querySelector("input");
+					let error_msg = element.querySelector("p");
+					title.classList.remove("active");
+					input.classList.remove("active");
+					error_msg.classList.remove("active");
+				});
+			}
 			console.log("entered else block");
 			//const yearsDifference = String(currentDate.getFullYear() - chosenDate.getFullYear());
 			//const monthsDifference = String(Math.abs(currentDate.getMonth() - chosenDate.getMonth()));
